@@ -1,0 +1,322 @@
+#include<iostream>
+using namespace std;
+
+class Skill{
+int skillID;
+string skillName;
+string description;
+
+public:
+Skill(int skillID,string skillName,string description)
+{
+this->skillID=skillID;
+this->skillName=skillName;
+this->description=description;
+	
+}
+
+void showSkillDetails()
+{
+cout<<"SKILL ID: "<<skillID<<endl;
+cout<<"SKILL-NAME: "<<skillName<<endl;
+cout<<"DESCRIPTION: "<<description<<endl;	
+}
+
+void updateSkillDescription(string newDescription)
+{
+description=newDescription;
+}
+
+
+
+
+	
+};
+
+
+class Sports{
+int sportid;
+string name;
+string description;
+string *requiredskills;
+Skill *skill;
+int countskill;
+int maxskill=5;
+
+
+	
+public:
+Sports(int sportid,string name,string d)
+{
+this->sportid=sportid;
+this->name=name;
+description=d;
+
+
+
+requiredskills=new string[20];
+for(int i=0;i<5;++i)
+{
+cout<<"Enter the Five skills For "<<name<<" sports: "<<endl;
+cin>>requiredskills[i];	
+}
+
+}
+
+~Sports(){
+delete[] requiredskills;
+
+}
+
+void addskill(string s)
+{
+if(maxskill>countskill){
+requiredskills[countskill]=s;
+countskill++;	
+}
+else{
+cout<<"Sorry Limit of skill has been reached: "<<endl;	
+}	
+}
+
+void removeskill(string s)
+{
+bool found=false;
+
+for(int i=0;i<countskill;i++){
+if(requiredskills[i]==s){
+found=true;	
+break;
+}	
+}
+if(found==true)
+{
+for(int i=0;i<countskill;i++){
+	
+}	
+	
+	}	
+}
+	
+	
+};
+
+class Mentor{
+string name;
+int MentorID;
+string *sportsExpertise;
+int MaxLearners;
+int currentLearners;
+string *assignedlearners;
+int numofSportsExpertise;
+
+
+
+
+
+public:
+Mentor(string name,int MentorID){
+this->name=name;
+this->MentorID=MentorID;
+
+
+
+cout<<"Maximum learners you want to mentor: "<<endl;
+cin>>MaxLearners;
+
+assignedlearners=new string[MaxLearners];
+
+currentLearners=0;
+
+cout<<"Enter the number of Sports in which you have Expertised: "<<endl;
+cin>>numofSportsExpertise;
+
+sportsExpertise=new string[numofSportsExpertise];
+cout<<"Enter the Sports: "<<endl;
+for(int i=0;i< numofSportsExpertise;i++){
+cin>>sportsExpertise[i];	
+}	
+
+
+
+}
+
+~Mentor(){
+delete[] sportsExpertise;
+delete[] assignedlearners;	
+}
+
+
+bool hascapicty(){
+return currentLearners<MaxLearners;	
+}
+
+bool matchlearner(string sports)
+{
+for(int i=0;i<numofSportsExpertise;i++){
+if(sportsExpertise[i]==sports){
+return true;
+}
+}
+return false;
+	
+}
+
+void assignstudent(string name){
+if(currentLearners<MaxLearners){
+assignedlearners[currentLearners]=name;
+currentLearners++;	
+}
+else{
+cout<<"The capicty of Leaners Iis full! "<<endl;	
+}
+}
+
+
+void mentordetails(){
+cout<<"Name: "<<endl;
+cout<<"Mentor ID: "<<endl;
+cout<<"Sports Expertise: "<<endl;
+for(int i=0;i<numofSportsExpertise;i++){
+cout<<sportsExpertise[i]<<endl;	
+}	
+}
+
+void viewlearner(){
+cout<<"Displaying Learners: "<<endl;
+for(int i=0;i<currentLearners;i++)	
+{
+cout<<assignedlearners[i]<<endl;	
+}
+
+}
+
+
+	
+
+};
+
+class Student{
+string name;
+int studentID;
+int age;
+string *sportsIntrests;
+bool mentorassigned;
+int numofSportsIntrests;
+
+public:
+
+Student(string name,int studentID,int age){
+this->name=name;
+this->studentID=studentID;
+this->age=age;
+
+
+
+mentorassigned=false;
+	
+}
+
+~Student(){
+delete[] sportsIntrests;
+}
+
+void RegisterforMentorship(Mentor *mentor){
+cout<<"Enter the Student Details: "<<endl;
+cout<<"Name: "<<endl;
+cin>>name;
+
+cout<<"Student ID: "<<endl;
+cin>>studentID;
+
+cout<<"Age: "<<endl;
+cin>>age;
+
+cout<<"in how much Sports you are intrested: "<<endl;
+cin>>numofSportsIntrests;
+
+sportsIntrests=new string[numofSportsIntrests];
+
+cout<<"Enter the Sports in which  you are intrested: "<<endl;
+for(int i=0;i<numofSportsIntrests;i++){
+cin>>sportsIntrests[i];	
+}
+
+cout<<"Wait while We Match Mentor For you: "<<endl;
+if(mentor->hascapicty()==true){
+
+for(int i=0;i<numofSportsIntrests;i++){
+if(mentor->matchlearner(sportsIntrests[i])==true){
+mentorassigned=true	;
+mentor->assignstudent(name);
+cout<<"Mentor Found! "<<endl;
+break;
+}	
+}	
+}
+else{
+cout<<"Sorry No Mentor Found! "<<endl;	
+}
+}
+
+void ViewMentorDetails(Mentor *mentor){
+mentor->mentordetails();	
+}
+
+void updateSportsIntrests(){
+cout<<"Update your sports intrests: "<<endl;
+for(int i=0;i<numofSportsIntrests;i++){
+cin>>sportsIntrests[i];
+}
+}
+
+
+
+
+	
+	
+
+	
+};
+int main(){
+	
+   
+    Mentor mentor1("Ali", 101);
+
+   
+    Skill skill1(1, "Footwork", "Improves movement efficiency.");
+    Skill skill2(2, "Endurance", "Enhances stamina.");
+    
+    
+    cout << "\nSkill Details:\n";
+    skill1.showSkillDetails();
+    skill2.showSkillDetails();
+
+  
+    Sports tennis(1, "Tennis", "A fast-paced racket sport.");
+    tennis.addskill("Footwork");
+    tennis.addskill("Endurance");
+
+   
+    Student student1("Saad", 201, 20);
+
+    
+    student1.RegisterforMentorship(&mentor1);
+
+   
+    if (mentor1.hascapicty()) {
+        student1.ViewMentorDetails(&mentor1);
+    } else {
+        cout << "No mentor available at the moment.\n";
+    }
+
+    
+    cout << "\nMentor's Assigned Learners:\n";
+    mentor1.viewlearner();
+
+    return 0;
+}
+
+
+
+
