@@ -1,4 +1,3 @@
-
 #include<iostream>
 using namespace std;
 
@@ -52,16 +51,10 @@ Sports(int sportid,string name,string d)
 this->sportid=sportid;
 this->name=name;
 description=d;
+countskill=0;
 
 
-
-requiredskills=new string[20];
-for(int i=0;i<5;++i)
-{
-cout<<"Enter the Five skills For "<<name<<" sports: "<<endl;
-cin>>requiredskills[i];	
-}
-
+requiredskills=new string[5];
 }
 
 ~Sports(){
@@ -80,23 +73,21 @@ cout<<"Sorry Limit of skill has been reached: "<<endl;
 }	
 }
 
-void removeskill(string s)
-{
-bool found=false;
-
-for(int i=0;i<countskill;i++){
-if(requiredskills[i]==s){
-found=true;	
+void removeskill(string s) {
+int i;
+for (i=0;i<countskill;i++) {
+if(requiredskills[i]==s) {
 break;
-}	
 }
-if(found==true)
-{
-for(int i=0;i<countskill;i++){
-	
-}	
-	
-	}	
+}
+if (i<countskill) {
+for (int j=i;j<countskill - 1; j++) {
+requiredskills[j] = requiredskills[j + 1];
+}
+countskill--;
+} else {
+cout << "Skill not found!" << endl;
+    }
 }
 	
 	
@@ -129,14 +120,8 @@ assignedlearners=new string[MaxLearners];
 
 currentLearners=0;
 
-cout<<"Enter the number of Sports in which you have Expertised: "<<endl;
-cin>>numofSportsExpertise;
-
+numofSportsExpertise=5;
 sportsExpertise=new string[numofSportsExpertise];
-cout<<"Enter the Sports: "<<endl;
-for(int i=0;i< numofSportsExpertise;i++){
-cin>>sportsExpertise[i];	
-}	
 
 
 
@@ -175,8 +160,8 @@ cout<<"The capicty of Leaners Iis full! "<<endl;
 
 
 void mentordetails(){
-cout<<"Name: "<<endl;
-cout<<"Mentor ID: "<<endl;
+cout<<"Name: "<<name<<endl;
+cout<<"Mentor ID: "<<MentorID<<endl;
 cout<<"Sports Expertise: "<<endl;
 for(int i=0;i<numofSportsExpertise;i++){
 cout<<sportsExpertise[i]<<endl;	
@@ -211,10 +196,11 @@ Student(string name,int studentID,int age){
 this->name=name;
 this->studentID=studentID;
 this->age=age;
-
-
-
 mentorassigned=false;
+numofSportsIntrests=5;
+sportsIntrests=new string[numofSportsIntrests];
+
+
 	
 }
 
@@ -233,15 +219,8 @@ cin>>studentID;
 cout<<"Age: "<<endl;
 cin>>age;
 
-cout<<"in how much Sports you are intrested: "<<endl;
-cin>>numofSportsIntrests;
 
-sportsIntrests=new string[numofSportsIntrests];
 
-cout<<"Enter the Sports in which  you are intrested: "<<endl;
-for(int i=0;i<numofSportsIntrests;i++){
-cin>>sportsIntrests[i];	
-}
 
 cout<<"Wait while We Match Mentor For you: "<<endl;
 if(mentor->hascapicty()==true){
@@ -279,42 +258,31 @@ cin>>sportsIntrests[i];
 
 	
 };
-int main(){
-	
-   
+int main() {
     Mentor mentor1("Ali", 101);
 
-   
     Skill skill1(1, "Footwork", "Improves movement efficiency.");
     Skill skill2(2, "Endurance", "Enhances stamina.");
-    
-    
+
     cout << "\nSkill Details:\n";
     skill1.showSkillDetails();
     skill2.showSkillDetails();
 
-  
     Sports tennis(1, "Tennis", "A fast-paced racket sport.");
     tennis.addskill("Footwork");
     tennis.addskill("Endurance");
 
-   
     Student student1("Saad", 201, 20);
-
-    
     student1.RegisterforMentorship(&mentor1);
 
-   
     if (mentor1.hascapicty()) {
         student1.ViewMentorDetails(&mentor1);
     } else {
         cout << "No mentor available at the moment.\n";
     }
 
-    
     cout << "\nMentor's Assigned Learners:\n";
     mentor1.viewlearner();
 
     return 0;
 }
-
