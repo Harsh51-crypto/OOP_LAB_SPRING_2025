@@ -1,0 +1,59 @@
+#include<iostream>
+using namespace std;
+class Employee{
+string name;
+string designation;
+public:
+Employee(){
+}	
+
+Employee(string name,string designation){
+	this->name=name;
+	this->designation=designation;
+}
+
+void display(){
+cout<<"Name: "<<name<<endl;
+cout<<"Designation: "<<designation<<endl;
+}
+};
+
+class Project{
+string title;
+string deadline;
+Employee *employee[10];
+int count;
+public:
+Project(){
+}	
+
+Project(string title,string deadline){
+this->title=title;
+this->deadline=deadline;
+count=0;	
+}
+
+void addemployee(Employee *e ){
+if(count<10){
+employee[count++]=e;	
+}
+}
+
+void Display(){
+cout<<"Project Title: "<<title<<endl;
+cout<<"Deadline: "<<deadline<<endl;
+cout<<"Employees Working in this Project: "<<endl;
+for(int i=0;i<count;i++){
+employee[i]->display();	
+}	
+}
+};
+int main(){
+Project p1("Managment-System","25-02-2026");
+Employee e1("Harsh","Backend");
+Employee e2("Sandesh","Frontend");
+p1.addemployee(&e1);
+p1.addemployee(&e2);
+p1.Display();	
+	return 0;
+}
