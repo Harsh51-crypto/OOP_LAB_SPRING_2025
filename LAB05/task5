@@ -1,0 +1,50 @@
+#include<iostream>
+using namespace std;
+class AlarmSystem{
+string securityLevel;
+public:
+AlarmSystem(){
+}	
+	
+
+
+void setsecurity(string security){
+if(security=="High" || "Medium" || "Low"){
+
+securityLevel=security;	
+}	
+	
+	
+}
+void display(){
+	cout<<"Security Level: "<<securityLevel;
+}
+	
+};
+class SmartHome{
+	
+int houseno;
+string address;
+AlarmSystem alarm;
+
+public:
+SmartHome(int houseno,string address){
+this->houseno=houseno;
+this->address=address;
+alarm.setsecurity("High");	
+}
+
+void display(){
+cout<<"House Details: "<<endl;
+cout<<"House No: "<<houseno<<endl;
+cout<<"Address: "<<address<<endl;
+alarm.display();
+	
+}	
+};
+int main(){
+SmartHome h(100,"Forum-Mall");
+h.display();
+	
+return 0;	
+}
