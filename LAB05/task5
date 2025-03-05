@@ -1,50 +1,72 @@
+
 #include<iostream>
 using namespace std;
-class AlarmSystem{
-string securityLevel;
-public:
-AlarmSystem(){
-}	
-	
 
-
-void setsecurity(string security){
-if(security=="High" || "Medium" || "Low"){
-
-securityLevel=security;	
-}	
-	
-	
-}
-void display(){
-	cout<<"Security Level: "<<securityLevel;
-}
-	
-};
-class SmartHome{
-	
-int houseno;
-string address;
-AlarmSystem alarm;
+class Doctor {
+    string name;
+    string specialization;
+    int experience;
 
 public:
-SmartHome(int houseno,string address){
-this->houseno=houseno;
-this->address=address;
-alarm.setsecurity("High");	
-}
+    Doctor() : name(""), specialization(""), experience(0) {}
 
-void display(){
-cout<<"House Details: "<<endl;
-cout<<"House No: "<<houseno<<endl;
-cout<<"Address: "<<address<<endl;
-alarm.display();
-	
-}	
+    Doctor(string name, string specialization, int experience) {
+        this->name = name;
+        this->specialization = specialization;
+        this->experience = experience;
+    }
+
+    void display() {
+        cout << "Name: " << name << endl;
+        cout << "Specialization: " << specialization << endl;
+        cout << "Years Of Experience: " << experience << endl;
+    }
 };
-int main(){
-SmartHome h(100,"Forum-Mall");
-h.display();
-	
-return 0;	
+
+class Hospital {
+    Doctor* doctors;
+    int count;
+    int capacity;
+
+public:
+    Hospital() {
+        capacity = 10;
+        doctors = new Doctor[capacity];
+        count = 0;
+    }
+
+    void addDoc(Doctor &doc) {
+        if (count < capacity) {
+            doctors[count++] = doc;
+        } else {
+            cout << "Hospital is full. Cannot add more doctors." << endl;
+        }
+    }
+
+    void display() {
+        cout << "Doctors Details: " << endl;
+        for (int i = 0; i < count; i++) {
+            doctors[i].display();
+            cout << endl << endl;
+        }
+    }
+
+    ~Hospital() {
+        delete[] doctors;
+    }
+};
+
+int main() {
+    Doctor d1("John Doe", "Cardiology", 10);
+    Doctor d2("Jane Smith", "Neurology", 15);
+    Doctor d3("Alice Johnson", "Pediatrics", 8);
+
+    Hospital h;
+    h.addDoc(d1);
+    h.addDoc(d2);
+    h.addDoc(d3);
+
+    h.display();
+
+    return 0;
 }
