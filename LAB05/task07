@@ -1,0 +1,139 @@
+#include<iostream>
+using namespace std;
+class Products{
+int id;
+string name;
+int stocks;
+public:
+Products(){
+	
+}
+
+void takeinput(){
+cout<<"Enter the Product ID: "<<endl;
+cin>>id;
+
+cout<<"Enter the Product Name: "<<endl;
+cin>>name;
+
+cout<<"Enter the Stocks: "<<endl;
+cin>>stocks;
+	
+}
+
+void setid(int id){
+this->id=id;	
+}
+
+void setname(string name){
+this->name=name;
+}
+
+void setstocks(int stocks){
+this->stocks=stocks;	
+}	
+
+int getid(){ return id;
+}
+
+string getname(){
+	return name;	
+}
+
+int getstocks(){
+return stocks;	
+}
+
+
+	
+};
+class Warehouse{
+Products *products[5]; // a warehouse is limited to handle 5 types of product//
+int count;
+int sortcount;
+public:
+Warehouse(){
+count=0;
+sortcount=0;	
+	
+}
+
+void addproducts(Products *p){
+	products[count++]=p;
+}
+
+void sortproduct(){
+while(sortcount<count){
+for(int i=0;i<count-sortcount;i++){
+if(products[i]->getname()>products[i+1]->getname()){
+Products *temp=products[i];
+products[i]=products[i+1];
+products[i+1]=temp;	
+
+}
+sortcount++;	
+}	
+}	
+}
+
+void searchProduct(int id){
+bool found=false;
+for(int i=0;i<count;i++){
+if(products[i]->getid()==id){
+cout<<"Products Found! "<<endl;	
+found=true;
+cout<<"Product Name: "<<products[i]->getname()<<endl;
+cout<<"Product Id: "<<products[i]->getid()<<endl;
+cout<<"Product Stock: "<<products[i]->getstocks()<<endl;
+break;
+}
+}
+if(found==false){
+cout<<"Product not found! "<<endl;	
+}	
+}
+
+void display(){
+for(int i=0;i<count;i++){
+cout<<"Product Name: "<<products[i]->getname()<<endl;	
+}	
+	
+}
+};	
+	
+
+
+int main(){
+	int size;
+cout<<"Number Of Products: "<<endl;
+cin>>size;
+Products p[size];
+cout<<"Enter Prodduct Details-------"<<endl;
+for(int i=0;i<size;i++){
+cout<<"Details of Product: "<<i+1<<endl;
+p[i].takeinput();	
+}
+
+Warehouse w;
+for(int i=0;i<size;i++){ //adding products//
+w.addproducts(&p[i]);	
+}
+cout<<"Before Sorting: "<<endl;
+w.display();
+cout<<endl<<endl;
+w.sortproduct();
+cout<<"After Sorting: "<<endl;
+w.display();
+
+int id;
+cout<<"Enter the Product ID: "<<endl;
+cin>>id;
+w.searchProduct(id);
+
+
+
+
+
+
+return 0;	
+}
