@@ -1,0 +1,62 @@
+#include<iostream>
+using namespace std;
+class Level{
+string type;
+public:
+Level(){
+}	
+	
+Level(string type){
+if(type=="EASY" || "MODERATE" || "DIFFICULT"){
+this->type=type;
+}
+}
+
+void display(){
+cout<<"Level: "<<type<<endl;	
+}
+
+
+	
+};
+class Game{
+
+string title;
+string genre;
+Level *l1;
+Level *l2;
+Level *l3;
+
+public:
+	Game(string title,string genre){
+	this->title=title;
+	this->genre=genre;
+	l1=new Level ("EASY");
+	l2=new Level("MODERATE");
+	l3=new Level("DIFFICULT");
+	
+	}
+
+void display(){
+cout<<"----------Game-Details---------------"<<endl;
+cout<<"Title: "<<title<<endl;
+cout<<"Genre: "<<genre<<endl;
+cout<<"Level of Games: "<<endl;
+l1->display();
+l2->display();
+l3->display();
+}
+
+~Game(){
+delete l1;
+delete l2;
+delete l3;	
+}
+};
+int main(){
+
+Game g("Valorant","Fun");
+
+g.display();
+return 0;	
+}
