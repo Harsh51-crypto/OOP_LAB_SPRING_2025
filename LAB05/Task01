@@ -1,1 +1,50 @@
+#include<iostream>
+using namespace std;
+class Appartment{
+int id;
+string address;
+string *owner_name;
 
+public:
+Appartment(int id,string address,string name){
+this->id=id;
+
+this->address=address;
+owner_name=new string(name);	
+}
+
+void setid(int id){
+this->id=id;	
+}	
+int getid(){
+	return id;
+}
+
+string getowner_name(){
+return *owner_name;	
+}
+
+Appartment(const Appartment &a){
+
+owner_name=new string (*a.owner_name);	
+}
+
+void display(){
+cout<<"Appartment Details: "<<endl;
+cout<<"Owner's Name: "<<*owner_name<<endl;
+cout<<"Appartment ID: "<<id<<endl;
+cout<<"Address: "<<address<<endl;
+	
+}
+
+~Appartment(){
+delete owner_name;	
+}
+};
+int main(){
+Appartment a(100,"Forum-Mall","Harsh");
+Appartment a2=a;
+a.display();
+	
+return 0;	
+}
