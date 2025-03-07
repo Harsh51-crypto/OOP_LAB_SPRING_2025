@@ -1,0 +1,139 @@
+#include<iostream>
+#include<string>
+using namespace std;
+
+class User{
+    private:
+    int age;
+    string licenseType;
+    string contact;
+    int userId;
+    string name;
+    public:
+    User(int age, string licenseType, string contact, int userId, string name) : age(age), licenseType(licenseType), contact(contact), userId(userId), name(name){}
+
+    void updateAge(int age) {this->age = age;}
+    void updateLicense(string licenseType){this->licenseType = licenseType;}
+    void updateContact(string contact) {this->contact = contact;}
+    void updateName(string name) {this->name = name;}
+     
+    int getAge() {return age;}
+    int getUserId() {return userId;}
+    string getname() {return name;}
+    string getLicenseType() {return licenseType;}
+    string getContact() {return contact;}
+      
+};
+
+class Vehicle{
+  private:
+  string model;
+  float rentalPrice;
+  string eligiblity;
+  
+
+  public:
+  Vehicle(){}
+  Vehicle(string model, float rentalPrice, string eligiblity) : model(model), rentalPrice(rentalPrice), eligiblity(eligiblity) {}
+
+  void viewVehicle(){
+    cout<<"Vehicle Model: "<<model<<endl;
+    cout<<"Rental PRICE per Day: "<<rentalPrice<<endl;
+    cout<<"Eligiblity(Licence type) "<<eligiblity<<endl;
+  }  
+//   void setInfo(string m, float rp, string elig){
+//       model = m;
+//       rentalPrice = rp;
+//       eligiblity = elig;
+
+//   }
+  string getModel(){return model;}
+  float getRentalPrice(){return rentalPrice;}
+  string getEligiblity(){return eligiblity;}
+
+};
+
+class RentalSystem{
+ private:
+ Vehicle* vehicle;
+ int maxVehicle;
+ int vehicleCount;
+ User* user;
+ int flag = 1;
+ public:
+ RentalSystem(int maxV){
+    vehicle = new Vehicle[maxV];
+    vehicleCount = 0;
+    maxVehicle = maxV;
+ }
+ 
+ void addVehicle(Vehicle* v){
+    if(vehicleCount<maxVehicle){
+        vehicle[vehicleCount] = *v;
+        cout << vehicle[vehicleCount].getModel() << " successfully added to the system" << endl;
+        vehicleCount++;
+    }else{
+     cout<<"Garage capacity is full"<<endl;
+    }
+      
+    
+ }
+  
+ void rentVehicle(User* u){
+    int i;
+     for( i=0;i<vehicleCount;i++){
+         if(u->getLicenseType() == vehicle[i].getEligiblity()){
+            cout<<u->getname()<<endl;
+            cout<<"Vehicles you are eligible for:"<<endl;
+            cout<<"Vehicle Number: "<<i+1<<endl;
+            vehicle[i].viewVehicle();
+            flag = 0;
+            cout<<"\n";
+            
+         }
+     }
+     if(flag){
+        cout<<"No vehicle is available of your category"<<endl;
+        return;
+     }
+  
+ }
+  
+ void showVehicles(){
+    for(int i=0;i<vehicleCount;i++){
+        vehicle[i].viewVehicle();
+    }
+ }
+
+ ~RentalSystem(){
+    delete[] vehicle;
+ }
+};
+
+int main(){
+	
+	cout<<"-------------harsh-dembla--------------------"<<endl;
+	cout<<"-------------24k-0912------------------------"<<endl;
+    RentalSystem garage(4);
+    Vehicle corolla("Corolla",60.5,"INTERMEDIATE");
+    Vehicle civic("Civic",50.5,"INTERMEDIATE");
+    Vehicle Gwagon("G-Wagon",250.55,"FULL");
+    Vehicle Mehran("Mehru",35.5,"LEARNER");
+    Vehicle Santro("Santro",30.5,"LEARNER");
+
+    garage.addVehicle(&corolla);
+    garage.addVehicle(&civic);
+    garage.addVehicle(&Gwagon);
+    garage.addVehicle(&Mehran);
+    garage.addVehicle(&Santro);
+
+    cout<<"\n";
+    User harsh(19,"INTERMEDIATE","93452534",700,"Harsh");
+    User sandesh(18,"LEARNER","93464534",962,"Sandesh");
+    User sahil(19,"FULL","956576",567,"Sahil");
+    cout<<"\n";
+    garage.rentVehicle(&harsh);
+    cout<<"\n";
+    garage.rentVehicle(&sandesh);
+
+}
