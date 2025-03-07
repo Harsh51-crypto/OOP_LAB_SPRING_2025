@@ -1,0 +1,206 @@
+#include<iostream>
+#include<utility>
+using namespace std;
+class Ball{
+
+int ballx;
+int bally;
+public:
+Ball(){
+ballx=0;
+bally=0;	
+}
+
+void move(int dx,int dy){
+ballx+=dx;
+bally+=dy;	
+}
+
+int getx(){
+	return ballx;
+}
+
+int gety(){
+return bally;	
+}
+
+void setball(int x,int y){
+ballx=x;
+bally=y;	
+}
+
+
+pair<int,int>getposition(){
+return make_pair(ballx,bally);	
+}
+
+};
+
+
+class Robot{
+string name;
+int hits;
+Ball *ball;
+int x,y;
+string direction;
+public:
+Robot(string name){
+this->name=name;
+hits=0;
+x=0;
+y=0;
+ball =new Ball;	
+}
+
+void hitball(Ball *ball,const string &Direction){
+if(Direction=="UP"){
+ball->move(0,1);
+	
+}
+else if(Direction=="DOWN"){
+ball->move(0,-1);	
+}
+else if(Direction=="RIGHT"){
+ball->move(1,0);	
+}
+else if(Direction=="LEFT"){
+ball->move(-1,0);
+}
+else{
+cout<<"Invalid Direction: "<<endl;	
+}
+hits++;
+}
+
+int gethits(){
+	return hits;
+}
+
+void setname(string n){
+	name=n;
+}
+
+
+};
+
+
+class Goal{
+int goalx;
+int goaly;
+public:
+
+Goal(){
+goalx=3;
+goaly=3;	
+}	
+
+bool isgoalReached(int ballx,int bally){
+if(ballx==goalx && bally==goaly){
+return true;	
+}	
+else{
+	return false;
+}
+}
+};
+
+class Team{
+Robot *robot;
+string teamname;
+
+public:
+Team(string name,string robotname){
+this->teamname=name;
+robot=new Robot(robotname);
+
+
+}
+~Team(){
+	delete robot;
+}	
+
+string getteamname(){
+return teamname;	
+}
+
+void hitball(Ball *ball,string direction){
+robot->hitball(ball,direction);	
+}
+
+int gethits(){
+	return robot->gethits();
+}
+
+};
+class Game{
+Team *teamone;
+Team *teamtwo;
+Ball *ball;
+Goal *goal;
+int x,y;
+public:
+Game(){
+teamone=new Team("Teamone","Robot1");
+teamtwo=new Team("Teamtwo","Robot2");
+ball = new Ball();
+goal =new Goal();	
+
+}	
+
+~Game(){
+	delete teamone;
+	delete teamtwo;
+	delete ball;
+	delete goal;
+}
+	
+void play(Team *team){
+while(goal->isgoalReached(ball->getx(),ball->gety())!=true){	
+string direction;
+cout<<"Enter the direction IN (UP,DOWM,RIGHT,LEFT): "<<endl;
+cin>>direction;
+team->hitball(ball,direction);
+pair<int, int> position = ball->getposition();
+cout << "(" << position.first << ", " << position.second << ")" << endl;
+
+
+}
+}
+void declarewinner(){
+if(teamone->gethits()<teamtwo->gethits()){
+	cout<<"Winner Team one: "<<endl;
+	cout<<"With "<<teamone->gethits()<<" HITS: "<<endl; 
+}	
+else if(teamone->gethits()>teamtwo->gethits()){
+	cout<<"Winner Team two: "<<endl;
+	cout<<"With "<<teamtwo->gethits()<<" HITS: "<<endl;
+}
+else{
+	cout<<"Tied: "<<endl;
+	
+}
+
+
+}
+
+void startgame(){
+cout<<"Team One: "<<endl;	
+play(teamone);
+ball->setball(0,0);
+cout<<"Team two: "<<endl;
+play(teamtwo);
+declarewinner();
+	
+}
+
+	
+};
+int main(){
+	cout<<"--------------Harsh-Kumar------------------------"<<endl;
+	cout<<"-----------------24k-0912--------------------------"<<endl;
+	
+	
+	Game g;
+	g.startgame();
+return 0;	
+}
